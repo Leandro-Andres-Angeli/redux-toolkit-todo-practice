@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import './styles.css';
 import Navbar from './components/Navbar';
 import Counter from './pages/Counter';
+import Products from './pages/Products';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Switch>
         <Route exact path='/' component={Home}></Route>
         <Route path='/counter' component={Counter}></Route>
+        <Route path='/products' component={Products}></Route>
       </Switch>
     </Fragment>
   );
