@@ -6,10 +6,11 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productsAction } from '../features/productsReducer';
+import { createId as id } from '../utils/utils';
 
 const Products = () => {
   const dispatch = useDispatch();
-  dispatch(productsAction.loadProducts());
+
   const { products } = useSelector((state) => state);
   // const handleDispatchProds = useCallback(() => {
   //   dispatch(productsAction.loadProducts());
@@ -21,10 +22,6 @@ const Products = () => {
   //   console.log('loaded');
   // dispatch(productsAction.loadProducts());
   // }, [handleDispatchProds]);
-  useEffect(() => {
-    dispatch(productsAction.loadProducts());
-    console.log(' first load');
-  }, []);
 
   return (
     <div>
@@ -53,12 +50,19 @@ function Product({ product }) {
   );
 }
 function AddPoductForm() {
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     const { target } = e;
-    const data = Object.fromEntries(new FormData(target));
+    const data = {
+      id: id(),
+      price: 111,
+      ...Object.fromEntries(new FormData(target)),
+    };
 
     console.log(data);
+    dispatch(productsAction.addProduct(data));
+    target.reset();
   };
   return (
     <div className='ph4 pv6'>

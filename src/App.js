@@ -7,8 +7,14 @@ import './styles.css';
 import Navbar from './components/Navbar';
 import Counter from './pages/Counter';
 import Products from './pages/Products';
+import { useDispatch } from 'react-redux';
+import { productsAction } from './features/productsReducer';
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(productsAction.loadProducts());
+  }, []);
   return (
     <Fragment>
       <Navbar></Navbar>

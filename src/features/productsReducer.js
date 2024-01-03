@@ -46,7 +46,7 @@ const productsSlice = createSlice({
       return state;
     },
     addProduct: (state, action) => {
-      state.push(action.payload);
+      state.unshift(action.payload);
     },
     removeProduct: (state, action) => {
       state.splice(state.findIndex(action.payload.id), 1);
