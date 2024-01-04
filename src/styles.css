@@ -3,3 +3,7 @@ li,
 ul li {
   list-style: none;
 }
+button {
+  width: fit-content;
+  border: none;
+}

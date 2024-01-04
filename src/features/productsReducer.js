@@ -39,17 +39,44 @@ const supermarketProducts = [
 ];
 const productsSlice = createSlice({
   name: 'products',
-  initialState: [],
+  initialState: { products: [] },
   reducers: {
     loadProducts: (state) => {
-      state = supermarketProducts;
-      return state;
+      state.products = supermarketProducts;
     },
     addProduct: (state, action) => {
-      state.unshift(action.payload);
+      state.products.unshift(action.payload);
     },
     removeProduct: (state, action) => {
-      state.splice(state.findIndex(action.payload.id), 1);
+      console.log(action.payload);
+      return {
+        products: state.products.filter((todo) => {
+          return todo.id !== action.payload;
+        }),
+      };
+      // console.log(action.payload);
+      // console.log(state);
+      // state.map((el) => console.log(el));
+      // const prodIdx = state.indexOf(id === 5);
+      // console.log(prodIdx);
+
+      // state.products.splice(
+      //  ,
+      //   1
+      // );
+
+      // console.log(action.payload);
+      // const idx = state.products.findIndex(
+      //   ({ id }) => id === Number(action.payload.id)
+      // );
+      // console.log(idx);
+      // state.splice(1, 2);
+      // return state.splice(state.findIndex(action.payload.id), 1);
+      // return {
+      //   ...state,
+      //   products: products.filter((el) => el.id !== action.payload.id),
+      // };
+      return state;
     },
   },
 });

@@ -7,11 +7,10 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { productsAction } from '../features/productsReducer';
 import { createId as id } from '../utils/utils';
+import Products from './Products';
 
-const Products = () => {
-  const dispatch = useDispatch();
-
-  const { products } = useSelector((state) => state);
+const ProductsComponent = () => {
+  const { products } = useSelector((state) => state.products);
   // const handleDispatchProds = useCallback(() => {
   //   dispatch(productsAction.loadProducts());
   //   console.log('callback');
@@ -38,13 +37,27 @@ const Products = () => {
   );
 };
 function Product({ product }) {
-  const { id, name, description } = product;
+  const { id, name, description, price } = product;
+  const dispatch = useDispatch();
   return (
     <li>
       <article>
         <p>id : {id}</p>
         <p>name : {name}</p>
         <p>description : {description}</p>
+        <p>
+          price :{' '}
+          {new Intl.NumberFormat('es-AR', {
+            style: 'currency',
+            currency: 'ARS',
+          }).format(price)}
+        </p>
+        <button
+          className='bg-dark-red'
+          onClick={() => dispatch(productsAction.removeProduct(Number(id)))}
+        >
+          Delete Product
+        </button>
       </article>
     </li>
   );
@@ -54,13 +67,27 @@ function AddPoductForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { target } = e;
+    const entries = new FormData(target);
+    console.log(typeof entries);
+    // console.log(entries.);
+    // entries.entries((el) => console.log(el));
+    // const normalized = Array.from(entries).reduce((acc, el) => {
+    //   !isNaN(Number(el[1])) ? [el[0], Number(el[1])] : el;
+
+    //   return acc;
+    // }, {});
+    console.log('normalized');
+    // const toObject = Object.from(new Map(normalized));
+    // console.log(toObject);
     const data = {
       id: id(),
-      price: 111,
-      ...Object.fromEntries(new FormData(target)),
+      name: entries.get('name'),
+      description: entries.get('description'),
+      price: Number(entries.get('price')),
     };
 
-    console.log(data);
+    // console.log(data);
+
     dispatch(productsAction.addProduct(data));
     target.reset();
   };
@@ -69,6 +96,7 @@ function AddPoductForm() {
       <form onSubmit={handleSubmit}>
         <input type='text' placeholder='name' name='name'></input>
         <input type='text' placeholder='description' name='description'></input>
+        <input type='number' placeholder='price' name='price'></input>
         <button className='w-3' type='submit'>
           add
         </button>
@@ -77,4 +105,4 @@ function AddPoductForm() {
   );
 }
 
-export default Products;
+export default ProductsComponent;
