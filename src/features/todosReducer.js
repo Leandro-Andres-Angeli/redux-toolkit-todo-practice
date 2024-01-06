@@ -11,6 +11,7 @@ export const updateTodoToDb = createAsyncThunk(
   'todos/updateTodo',
   async (todo) => {
     const { id, ...rest } = todo;
+
     const res = await fetch('http://localhost:5000/todos/' + id, {
       method: 'PUT',
       headers: {
@@ -79,6 +80,7 @@ const todosSlice = createSlice({
     builder.addCase(getTodosFromDb.fulfilled, (state, action) => {
       state.status = 'fullfilled';
       state.loading = false;
+      state.fireUpdate = null;
       console.log('fetching', action.payload);
       state.todos = action.payload;
     });
@@ -121,9 +123,12 @@ const todosSlice = createSlice({
     builder.addCase(updateTodoToDb.fulfilled, (state, action) => {
       state.status = 'fullfilled';
       console.log(action.payload);
-      state.fireUpdate = {};
-      if (action.payload.status !== 200) {
+      if (action.payload.status === 200) {
+        state.fireUpdate = {};
+      } else {
         console.log('error not found');
+        console.log('not updated');
+
         return;
       }
 

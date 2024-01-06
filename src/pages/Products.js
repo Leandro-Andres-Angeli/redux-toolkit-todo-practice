@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productsAction } from '../features/productsReducer';
 import { createId as id } from '../utils/utils';
@@ -37,7 +32,7 @@ const ProductsComponent = () => {
 };
 function Product({ product }) {
   const { id, name, description, price } = product;
-  const [styles, setStyles] = useState(null);
+  const [styles] = useState(null);
   const dispatch = useDispatch();
   // useEffect(() => {
   //   return () => {

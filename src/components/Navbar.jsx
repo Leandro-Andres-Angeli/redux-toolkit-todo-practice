@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import colors from '../utils/UI/colors';
-import Products from '../pages/Products';
 
 const Navbar = () => {
   return (

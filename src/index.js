@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -20,13 +20,14 @@ const store = createStore(
   )
 ); */
 ReactDOM.render(
-  <StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  </StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+
+  // </React.StrictMode>
   document.getElementById('root')
 );
 

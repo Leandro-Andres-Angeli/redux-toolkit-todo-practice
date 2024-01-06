@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteTodoFromDb,
@@ -8,14 +8,15 @@ import {
 } from '../features/todosReducer';
 import { createId } from '../utils/utils';
 import { editTodosActions } from '../features/editTodoReducer';
-const TodosForm = ({ setCheckUpdate }) => {
+const TodosForm = () => {
+  //  ({ setCheckUpdate })
+
   const dispatch = useDispatch();
   const { todoToEdit, edition } = useSelector((state) => state.edit);
-  const { fireUpdate } = useSelector((state) => state.todos);
 
   const handleUpdate = (data) => {
     dispatch(updateTodoToDb(data));
-    setCheckUpdate(fireUpdate);
+    // setCheckUpdate(fireUpdate);
   };
   useEffect(() => {
     console.log('mode change');
@@ -91,19 +92,34 @@ const Todos = () => {
   const { todos, status, loading, fireUpdate } = useSelector(
     (state) => state.todos
   );
-  const [checkUpdate, setCheckUpdate] = useState(fireUpdate);
+  // const [checkUpdate, setCheckUpdate] = useState(fireUpdate);
+  // useEffect(() => {
+  //   dispatch(getTodosFromDb());
+  // }, []);
+  function handleUpdateDom(clean) {
+    if (clean) {
+      dispatch(getTodosFromDb());
+    }
+  }
   useEffect(() => {
-    dispatch(getTodosFromDb());
-  }, []);
-  useEffect(() => {
-    dispatch(getTodosFromDb());
+    let clean = true;
+
+    handleUpdateDom(clean);
     console.log('refetched');
+
+    console.log('UseEffect clean up function');
+
+    return () => {
+      clean = false;
+    };
   }, [fireUpdate]);
 
   return (
     <div>
       <h1>Todos</h1>
-      <TodosForm {...{ setCheckUpdate }} />
+      <TodosForm
+      //  {...{ setCheckUpdate }}
+      />
       {loading && 'loading state'}
       {status === 'fullfilled' && todos && (
         <ul className='ph5'>
