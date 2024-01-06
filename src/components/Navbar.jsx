@@ -31,6 +31,11 @@ const Navbar = () => {
             Products
           </NavLink>
         </li>
+        <li>
+          <NavLink activeStyle={{ color: colors.fuchsia }} to='/todos'>
+            Todos
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

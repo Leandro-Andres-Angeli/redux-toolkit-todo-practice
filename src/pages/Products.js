@@ -7,7 +7,6 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { productsAction } from '../features/productsReducer';
 import { createId as id } from '../utils/utils';
-import Products from './Products';
 
 const ProductsComponent = () => {
   const { products } = useSelector((state) => state.products);
@@ -38,10 +37,19 @@ const ProductsComponent = () => {
 };
 function Product({ product }) {
   const { id, name, description, price } = product;
+  const [styles, setStyles] = useState(null);
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   return () => {
+  //     setStyles({ bg: 'black' });
+  //     setTimeout(() => {}, 6000);
+  //     console.log('un mount');
+  //   };
+  // }, []);
+
   return (
     <li>
-      <article>
+      <article styles={{ backgroundColor: styles && styles.bg }}>
         <p>id : {id}</p>
         <p>name : {name}</p>
         <p>description : {description}</p>
@@ -54,7 +62,7 @@ function Product({ product }) {
         </p>
         <button
           className='bg-dark-red'
-          onClick={() => dispatch(productsAction.removeProduct(Number(id)))}
+          onClick={() => dispatch(productsAction.removeProduct(id))}
         >
           Delete Product
         </button>
@@ -97,6 +105,7 @@ function AddPoductForm() {
         <input type='text' placeholder='name' name='name'></input>
         <input type='text' placeholder='description' name='description'></input>
         <input type='number' placeholder='price' name='price'></input>
+
         <button className='w-3' type='submit'>
           add
         </button>

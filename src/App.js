@@ -9,6 +9,7 @@ import Counter from './pages/Counter';
 import Products from './pages/Products';
 import { useDispatch } from 'react-redux';
 import { productsAction } from './features/productsReducer';
+import Todos from './pages/Todos';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const App = () => {
         <Route exact path='/' component={Home}></Route>
         <Route path='/counter' component={Counter}></Route>
         <Route path='/products' component={Products}></Route>
+        <Route path='/todos' component={Todos}></Route>
       </Switch>
     </Fragment>
   );
